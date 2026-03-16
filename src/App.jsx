@@ -488,11 +488,12 @@ const callAI = async ({ prompt, system = "", maxTokens = 2000 }) => {
 
   // ── Try Claude first ──
   const tryAnthropic = async (key) => {
-    const headers = { "Content-Type": "application/json" };
-    if (key) {
-      headers["x-api-key"] = key;
-      headers["anthropic-version"] = "2023-06-01";
-    }
+    const headers = {
+      "Content-Type": "application/json",
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true",
+    };
+    if (key) headers["x-api-key"] = key;
     const body = { model: "claude-sonnet-4-20250514", max_tokens: maxTokens,
       messages: [{ role: "user", content: prompt }] };
     if (system) body.system = system;
